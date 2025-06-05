@@ -29,6 +29,7 @@
     ├── spark-defaults.conf
     └── jobs/
         └── ejemplo.py
+```
 
 ---
 
@@ -64,7 +65,7 @@ SPARK_EVENT_LOG_ENABLED=false
 
 # Deploy mode
 SPARK_DEPLOY_MODE=client
-
+```
 
 ⸻
 
@@ -78,7 +79,7 @@ chmod +x run.sh        # 1) dar permisos la primera vez
 ⸻
 
 🔄 Reiniciar o limpiar el cluster
-
+```
 # Apagar y eliminar volúmenes
 docker compose down -v
 
@@ -87,13 +88,13 @@ docker builder prune -af
 
 # Volver a levantar todo
 ./run.sh
-
+```
 
 ⸻
 
 🌐 Interfaces útiles
-	•	Spark UI → http://localhost:8080
-	•	Jupyter  → http://localhost:8888
+- Spark UI → http://localhost:8080
+- Jupyter  → http://localhost:8888
 
 ⸻
 
@@ -126,15 +127,19 @@ docker logs -f spark-master
 ⸻
 
 🏗️ Detalles internos
-	•	Ivy fix → /opt/bitnami/.ivy2 es el repo Maven local; sin acceso a /root.
-	•	Event-log off (spark.eventLog.enabled=false) → no requiere Kerberos.
-	•	Usuario seguro → Contenedor corre como uid 1001 (HOME=/opt/bitnami).
-	•	Parámetros dinámicos → Memorias/núcleos vienen de .env vía run.sh --conf.
+
+- Ivy fix → /opt/bitnami/.ivy2 es el repo Maven local; sin acceso a /root.
+
+- Event-log off (spark.eventLog.enabled=false) → no requiere Kerberos.
+
+- Usuario seguro → Contenedor corre como uid 1001 (HOME=/opt/bitnami).
+
+- Parámetros dinámicos → Memorias/núcleos vienen de .env vía run.sh --conf.
 
 ⸻
 
 ✅ Ventajas
-	•	Cero cloud · Reproducible · Extensible · Perfecto para docencia y POC.
+- Cero cloud · Reproducible · Extensible · Perfecto para docencia y POC.
 
 ⸻
 
