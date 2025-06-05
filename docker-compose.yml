@@ -1,0 +1,64 @@
+version: "3.8"
+
+services:
+  # ────────────────────────────────────
+  # Spark Master
+  # ────────────────────────────────────
+  spark-master:
+    build: ./spark                 # usa Dockerfile en ./spark
+    container_name: spark-master
+    environment:
+      - SPARK_MODE=master
+      - SPARK_MASTER_HOST=spark-master
+      - HOME=/opt/bitnami          # en master y en worker
+      - HADOOP_USER_NAME=bitnami
+    ports:
+      - "7077:7077"   # puerto RPC del cluster
+      - "8080:8080"   # Spark UI
+    env_file:
+      - .env
+    volumes:
+      - ./spark/jobs:/opt/spark/jobs   # scripts visibles en master
+
+  # ────────────────────────────────────
+  # Spark Workers (réplicas controladas por .env)
+  # ────────────────────────────────────
+  spark-worker:
+    build: ./spark
+    depends_on:
+      - spark-master
+    environment:
+      - HOME=/opt/bitnami          # en master y en worker
+      - SPARK_MODE=worker
+      - SPARK_MASTER=spark://spark-master:7077
+      - HADOOP_USER_NAME=bitnami
+    env_file:
+      - .env
+    deploy:
+      replicas: ${SPARK_WORKER_INSTANCES}   # escala con variable .env
+    volumes:
+      - ./spark/jobs:/opt/spark/jobs        # workers también ven los scripts
+
+  # ────────────────────────────────────
+  # Jupyter Notebook conectado al cluster
+  # ────────────────────────────────────
+  jupyter:
+    image: jupyter/pyspark-notebook:latest
+    container_name: spark-jupyter
+    depends_on:
+      - spark-master
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+      - PYSPARK_PYTHON=python3
+      - PYSPARK_DRIVER_PYTHON=jupyter
+      - PYSPARK_DRIVER_PYTHON_OPTS=notebook \
+        --NotebookApp.token='' \
+        --NotebookApp.password='' \
+        --NotebookApp.allow_origin='*' \
+        --NotebookApp.ip='0.0.0.0' \
+        --NotebookApp.port=8888 \
+        --no-browser
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./spark/jobs:/home/jovyan/work     # notebooks comparten los scripts
