@@ -101,12 +101,13 @@ docker builder prune -af
 
 🧪 Script de ejemplo (spark/jobs/ejemplo.py)
 
+```python
 from pyspark.sql import SparkSession
 spark = SparkSession.builder.appName("EjemploDocker").getOrCreate()
 df = spark.range(1_000_000).withColumnRenamed("id", "numero")
 df.selectExpr("numero", "numero * 2 AS doble").show(10)
 spark.stop()
-
+```
 
 ⸻
 
