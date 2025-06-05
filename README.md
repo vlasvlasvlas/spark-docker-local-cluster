@@ -23,11 +23,11 @@
 ├── .env
 ├── run.sh
 └── spark/
-├── Dockerfile
-├── entrypoint.sh
-├── spark-defaults.conf
-└── jobs/
-└── ejemplo.py
+    ├── Dockerfile
+    ├── entrypoint.sh
+    ├── spark-defaults.conf
+    └── jobs/
+        └── ejemplo.py
 
 ---
 
