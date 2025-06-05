@@ -1,7 +1,8 @@
 # ⚡ Spark Local Cluster (tipo Databricks) con Docker + Jupyter + `.env`
-> **¿Para qué sirve?**  
-> Levanta en tu máquina un _mini-Databricks_ totalmente **offline** para:  
-> • Probar notebooks y ETLs PySpark localmente • Reproducir cargas distribuidas sin coste • Enseñar Spark sin depender de la nube
+
+**¿Para qué sirve?**  
+
+Levanta en tu máquina un _mini-Databricks_ totalmente **offline** para:  Probar notebooks y ETLs PySpark localmente • Reproducir cargas distribuidas sin coste • Enseñar Spark sin depender de la nube
 
 ---
 
