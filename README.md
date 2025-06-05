@@ -18,6 +18,7 @@
 
 ## 📂 Árbol del proyecto
 
+```plaintext
 .
 ├── docker-compose.yml
 ├── .env
